@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {environment} from "../../environments/environment";
 import {Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class SecurityService {
   }
 
   login() {
-    window.open(this.baseUrl + this.authorizeEndpoint, '_self');
+    window.open(this.baseUrl + this.authorizeEndpoint, '_blank');
   }
 
   updateToken(token:any) {
@@ -43,5 +44,9 @@ export class SecurityService {
 
   logout(): Observable<any> {
     return this.http.post(this.baseUrl + '/logout', this.getToken());
+  }
+
+  getUserInfo(): Observable<any> {
+    return this.http.get(  environment.baseUrl+'/v1/home');
   }
 }

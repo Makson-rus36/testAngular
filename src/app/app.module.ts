@@ -15,11 +15,13 @@ import {LoginModule} from "./login/login.module";
 import {AuthHeaderInterceptor} from "./services/AuthHeaderInterceptor";
 import { CallbackComponent } from './callback/callback.component';
 import {CallbackModule} from "./callback/callback.module";
+import { NavbarComponent } from './navbar/navbar.component';
+import {NavbarModule} from "./navbar/navbar.module";
 
 const appRoutes: Routes = [
-  {path: 'home', component: HomeComponent, canActivate: [AuthGuard]},
+  {path: 'home', component: HomeComponent},
   {path: 'login', component: LoginComponent},
-  {path:'messages',component: MessageComponent},
+  {path: 'messages',component: MessageComponent},
   {path: 'callback', component: CallbackComponent},
   {path: '', redirectTo: '/home', pathMatch: 'full'}
 ];
@@ -35,9 +37,10 @@ const appRoutes: Routes = [
     MessageModule,
     HomeModule,
     HttpClientModule,
-    NgbModule,
+
     LoginModule,
-    CallbackModule
+    CallbackModule,
+    NavbarModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

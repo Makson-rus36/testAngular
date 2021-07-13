@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {MessageModel} from "../models/message.model";
 import {MessageService} from "../services/message.service";
 import {HttpClient} from "@angular/common/http";
+import {SecurityService} from "../services/SecurityService";
+import {interval} from "rxjs";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-message',
@@ -15,10 +18,22 @@ export class MessageComponent implements OnInit {
   message: MessageModel = new MessageModel("","");
   messages: MessageModel[]=[];
 
-  constructor(private messageService: MessageService) { }
+  constructor(private messageService: MessageService, private securityService:SecurityService, private router:Router) { }
 
   ngOnInit(): void {
     this.getAllMessages();
+    if(!this.securityService.isLoggedIn()){
+      this.securityService.login();
+      let intr = interval(10).subscribe(
+        x=>{
+          let isAuth = this.securityService.isLoggedIn();
+          if(isAuth){
+            window.location.reload();
+            intr.unsubscribe();
+          }
+        }
+      )
+    }
   }
   getAllMessages() {
     this.messageService.getMessages().subscribe(x => {

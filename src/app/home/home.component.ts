@@ -20,19 +20,8 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(environment.baseUrl)
-    this.getUserInfo().subscribe(data => this.name = data.name);
+
   }
 
-  getUserInfo(): Observable<any> {
-    return this.http.get(  environment.baseUrl+'/v1/home');
-  }
 
-  logout()
-  {
-    this.securityService.logout() .subscribe(() => {
-      this.securityService.removeToken();
-      this.router.navigate(['/login']);
-    });
-  }
 }
