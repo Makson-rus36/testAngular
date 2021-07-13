@@ -1,0 +1,16 @@
+<h4>Message list</h4>
+<div class="form-group col md-5">
+  <div class="form">
+    <input [(ngModel)]="message.text" class="form-control mb-3" placeholder="Message" type="text">
+    <button class="btn btn-primary me-3" *ngIf="isEdit" (click)="updateMessage()">Update</button>
+    <button class="btn btn-primary me-3" *ngIf="isEdit" (click)="setIsEdit(false); cancelChanges();">Cancel</button>
+    <button class="btn btn-primary me-3" *ngIf="!isEdit" (click)="newMessage()">Save</button>
+  </div>
+</div>
+<div *ngFor="let message1 of messages">
+  <div class="input-group my-2">
+    <div class="me-2">{{message1.id}} / {{message1.text}} at {{message1.creationDate}}</div>
+    <button class="btn btn-warning me-2" (click)="setIsEdit(true); setEditMessage(message1)">Edit</button>
+    <button class="btn btn-danger me-2" (click)="deleteMessage(message1)">Delete</button>
+  </div>
+</div>
